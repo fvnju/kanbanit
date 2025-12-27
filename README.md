@@ -4,12 +4,6 @@ A premium, Linear-inspired Kanban board built with React and Vite.
 
 ## Features
 
-### 🎨 Linear-like Design
-
-- **Premium Dark Mode**: Deep, solid background colors (`#0F1115`) with no gradients.
-- **Clean Typography**: Optimized for readability and hierarchy.
-- **Micro-interactions**: Subtle hover states and smooth transitions.
-
 ### 📱 fully Responsive Mobile Experience
 
 - **Tabbed Interface**: On mobile, the board switches to a tabbed view to show one column at a time, preventing horizontal scroll fatigue.
