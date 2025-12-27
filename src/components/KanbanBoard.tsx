@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getData, setData } from "../lib/db";
 
 import type { Column, Id, Task } from "../types";
 import ColumnContainer from "./ColumnContainer";
@@ -31,6 +32,28 @@ export default function KanbanBoard() {
     { id: "3", columnId: "doing", content: "Implement Drag and Drop" },
     { id: "4", columnId: "done", content: "Initialize Repo" },
   ]);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    async function loadData() {
+      const savedColumns = await getData("columns");
+      const savedTasks = await getData("tasks");
+      if (savedColumns) setColumns(savedColumns);
+      if (savedTasks) setTasks(savedTasks);
+      setIsLoaded(true);
+    }
+    loadData();
+  }, []);
+
+  useEffect(() => {
+    if (!isLoaded) return;
+    setData("columns", columns);
+  }, [columns, isLoaded]);
+
+  useEffect(() => {
+    if (!isLoaded) return;
+    setData("tasks", tasks);
+  }, [tasks, isLoaded]);
 
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
   const [activeTask, setActiveTask] = useState<Task | null>(null);
@@ -50,6 +73,8 @@ export default function KanbanBoard() {
       },
     })
   );
+
+  if (!isLoaded) return <div>Loading board...</div>;
 
   return (
     <div className="board-container">
